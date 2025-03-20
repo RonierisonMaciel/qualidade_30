@@ -1,12 +1,15 @@
 ## /tests/test_api.py
 from fastapi.testclient import TestClient
 from app.main import app
+from app.models import Task
+from app.services import add_task, delete_task
 
 client = TestClient(app)
 
 def test_create_task():
     response = client.post("/tasks", json={"id": 1, "title": "Test", "description": "Testing", "completed": False})
     assert response.status_code == 200
+
 
 def test_list_tasks():
     response = client.get("/tasks")
@@ -21,5 +24,8 @@ def test_update_task():
     assert response.status_code == 200
 
 def test_delete_task():
-    response = client.delete("/tasks/1")
-    assert response.status_code == 200
+    task = Task(id=1, title="Test Task", description="This is a test", completed=False)
+    add_task(task)
+    response = delete_task(1)
+    assert response == {"message": "Task deleted com sucesso!"}
+
