@@ -17,9 +17,12 @@ def test_read_task():
     assert response.status_code == 200
 
 def test_update_task():
-    response = client.put("/tasks/1", json={"id": 1, "title": "Updated", "description": "Updated desc", "completed": True})
+    response = client.put("/tasks/1", json={"id": 1, 
+                                            "title": "Updated",
+                                            "description": "Updated desc",
+                                            "completed": True})
     assert response.status_code == 200
 
 def test_delete_task():
     response = client.delete("/tasks/1")
-    assert response.status_code == 200
+    assert response.json() == {"message": "Task deleted com sucesso!"}
