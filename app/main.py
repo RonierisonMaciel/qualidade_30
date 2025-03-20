@@ -26,10 +26,13 @@ def read_task(task_id: int):
     return task
 
 @app.put("/tasks/{task_id}")
-def update_task(task_id: int):
-    return update_task(task_id)
+def update_task_task(task_id: int, task: Task):
+    return update_task(task_id, task)
 
 @app.delete("/tasks/{task_id}")
 def remove_task(task_id: int):
-    return remove_task(task_id)
+    result = delete_task(task_id)  
+    return result
+
+
 

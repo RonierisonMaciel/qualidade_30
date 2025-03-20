@@ -12,8 +12,8 @@ def add_task(task: Task):
 def update_task(task_id: int, updated_task: Task):
     for i, task in enumerate(tasks):
         if task.id == task_id:
-            return updated_task
             tasks[i] = updated_task
+            return updated_task
     return None
 
 def delete_task(task_id: int):
