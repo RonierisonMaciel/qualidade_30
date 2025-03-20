@@ -10,8 +10,10 @@ def test_get_task():
     assert get_task(1) is not None
 
 def test_update_task():
-    updated_task = Task(id=1, title=1, description="Updated", completed="True")
-    assert update_task(1, updated_task) == updated_task
+    updated_task = Task(id=1, title="Updated Task", description="Updated description", completed=True)  
+    assert update_task(1, updated_task) == updated_task  
+
 
 def test_delete_task():
-    assert delete_task(1) == {"message": "Task deleted com sucesso"}
+    
+    assert delete_task(1) == {"message": "Task deleted com sucesso!"}
