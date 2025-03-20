@@ -7,9 +7,16 @@ python -m venv .venv
 ```
 
 ### 2. Acessar o ambiente virtual
+ - #### para ambientes ruindows
 
 ```bash
 .venv\Scripts\activate
+```
+
+- #### para ambientes unix
+
+```bash
+source .venv/bin/activate
 ```
 
 ### 3. Instalar as dependências
