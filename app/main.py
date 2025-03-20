@@ -26,10 +26,18 @@ def read_task(task_id: int):
     return task
 
 @app.put("/tasks/{task_id}")
-def update_task(task_id: int):
-    return update_task(task_id)
+def update_task_endpoint(task_id: int, updated_task: Task):
+    task = update_task(task_id, updated_task)
+    if not task:
+        raise HTTPException(status_code=404, detail="Task not found")
+    return task
 
 @app.delete("/tasks/{task_id}")
-def remove_task(task_id: int):
-    return remove_task(task_id)
+def remove_task_endpoint(task_id: int):
+    result = delete_task(task_id)
+    if not result:
+        raise HTTPException(status_code=404, detail="Task not found")
+    return {"message": "Task deleted com sucesso"}
+
+
 
