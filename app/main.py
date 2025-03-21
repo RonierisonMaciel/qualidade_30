@@ -1,8 +1,8 @@
-## /app/main.py
 from fastapi import FastAPI, HTTPException
 from app.models import Task
 from app.database import tasks
 from app.services import get_task, add_task, update_task, delete_task
+
 
 app = FastAPI()
 
@@ -26,10 +26,15 @@ def read_task(task_id: int):
     return task
 
 @app.put("/tasks/{task_id}")
-def update_task(task_id: int):
-    return update_task(task_id)
+def update_task_route(task_id: int, task: Task):  # Agora recebe a tarefa atualizada
+    updated_task = update_task(task_id, task)
+    if not updated_task:
+        raise HTTPException(status_code=404, detail="Task not found")
+    return updated_task
 
 @app.delete("/tasks/{task_id}")
-def remove_task(task_id: int):
-    return remove_task(task_id)
-
+def remove_task_route(task_id: int):
+    success = delete_task(task_id)
+    if not success:
+        raise HTTPException(status_code=404, detail="Task not found")
+    return {"message": "Task deleted com sucesso"}

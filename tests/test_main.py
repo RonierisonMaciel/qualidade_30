@@ -1,17 +1,28 @@
-## /tests/test_main.py
-from app.services import add_task, get_task, update_task, delete_task
+# tests/test_main.py
+
+from fastapi.testclient import TestClient
+from app.main import app
 from app.models import Task
 
-def test_add_task():
-    task = Task(id=1, title="Test Task", description="This is a test", completed=False)
-    assert add_task(task) == task
+client = TestClient(app)
 
-def test_get_task():
-    assert get_task(1) is not None
+def test_create_task():
+    response = client.post("/tasks", json={"id": 1, "title": "Task 1", "description": "First task", "completed": False})
+    assert response.status_code == 200
+    assert response.json() == {"id": 1, "title": "Task 1", "description": "First task", "completed": False}
+
+def test_list_tasks():
+    response = client.get("/tasks")
+    assert response.status_code == 200
+    assert len(response.json()) > 0
 
 def test_update_task():
-    updated_task = Task(id=1, title=1, description="Updated", completed="True")
-    assert update_task(1, updated_task) == updated_task
+    updated_task = {"id": 1, "title": "Updated Title", "description": "Updated", "completed": True}  # Corrigido para string
+    response = client.put("/tasks/1", json=updated_task)
+    assert response.status_code == 200
+    assert response.json() == updated_task
 
 def test_delete_task():
-    assert delete_task(1) == {"message": "Task deleted com sucesso"}
+    response = client.delete("/tasks/1")
+    assert response.status_code == 200
+    assert response.json() == {"message": "Task deleted com sucesso"}
