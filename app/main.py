@@ -31,5 +31,5 @@ def update_task(task_id: int):
 
 @app.delete("/tasks/{task_id}")
 def remove_task(task_id: int):
-    return remove_task(task_id)
+    return delete_task(task_id)
 
