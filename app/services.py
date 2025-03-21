@@ -13,10 +13,11 @@ def update_task(task_id: int, updated_task: Task):
     for i, task in enumerate(tasks):
         if task.id == task_id:
             return updated_task
-            tasks[i] = updated_task
+        tasks[i] = updated_task
     return None
 
 def delete_task(task_id: int):
     global tasks
+    #podia melhorar esses nomes ne
     tasks = [task for task in tasks if task.id != task_id]
     return {"message": "Task deleted com sucesso!"}
